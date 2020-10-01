@@ -2,35 +2,108 @@
 <html>
 <head>
     <title>Invoice</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/bootstrap.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
     <script src="script.js" defer></script>
+    <link href="style.css">
 </head>
 <body>
-<div class="container">
-    <br/>
-    <br/>
-    <h2 align="center" class="float-left">Invoice System</h2>
-    <div class="form-group">
-        <form method="post" action="#" id="formId">
-            <div class="table-responsive">
-                <div class="" id="tableFields">
-                    <div class="inputDiv col-5">
-                        <select class="browser-default custom-select" id="selectOpt" name="getOption">
-                            <option selected disabled>...</option>
-                            <option value="Project">Project</option>
-                            <option value="Service">Service</option>
-                        </select>
-                    </div>
-                    <div id="getOpt" class=" col-5"></div><br>
-                    <div id="getType" class=" col-5"></div>
-                </div>
-            </div>
-        </form>
-    </div>
+<div class="invoice-box">
+    <table class="table table-responsive">
+        <tr class="heading">
+            <td colspan="3">
+                Invoice System
+            </td>
+        </tr>
+
+        <tr class="heading">
+            <td>
+                Item
+            </td>
+
+            <td>
+                Type
+            </td>
+
+            <td>
+                Quantity 1
+            </td>
+            <td>
+                Quantity 2
+            </td>
+
+            <td>
+                Total
+            </td>
+            <td>
+                Tax%
+            </td>
+            <td>
+                Discount
+            </td>
+            <td>
+                Price
+            </td>
+        </tr>
+
+        <tr class="item">
+            <td>
+                <select class="browser-default custom-select" id="selectOpt">
+                    <option selected disabled>Select One</option>
+                    <option value="Project">Project</option>
+                    <option value="Service">Service</option>
+                </select>
+            </td>
+
+            <td>
+                <select class="browser-default custom-select" id="typeOpt" onchange="handleTypeChange(this)">
+                    <option selected disabled="">Select Type</option>
+                    <option value="Hourly">Hourly</option>
+                    <option value="Fixed">Fixed</option>
+                </select>
+            </td>
+
+            <td>
+                <input type="number" value="" onkeyup="calculateTotals(this)" placeholder=""/>
+            </td>
+
+            <td>
+                <input type="number" value="" onkeyup="calculateTotals(this)" placeholder=""/>
+            </td>
+            <td>
+                <input type="number" value="" onkeyup="calculateTotals(this)"/>
+            </td>
+            <td>
+                <input type="number" value="" onkeyup="calculateTotals(this)"/>
+            </td>
+
+            <td>
+                <input type="number" value="" onkeyup="calculateTotals(this)"/>
+            </td>
+            <td class="subtotal">
+                $0.00
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="4">
+                <button class="btn-add-row">Add row</button>
+            </td>
+        </tr>
+
+        <tr class="subTotalPrice">
+            Sub Total
+            <h3><td colspan="3"></td></h3>
+
+        </tr>
+    </table>
 </div>
 </body>
 </html>
-

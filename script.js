@@ -1,73 +1,64 @@
-/** tax calculation function */
-function taxFunction(total, tax) {
-    var totalTax = total / 100 * tax;
-    return totalTax;
-}
+/** ad new row */
+$('.btn-add-row').on('click', () => {
+    let $lastRow = $('.item:last');
+    let $newRow = $lastRow.clone();
 
-/** sub total function */
-function subTotalFunction(total, totalTax, discount) {
-    var result = total + totalTax - discount;
-    return result;
-}
-
-/** select Invoice */
-$(document).ready(function () {
-    $("#selectOpt").change(function () {
-        var selectOpt = $(this);
-        if (selectOpt.val() === "Project" || selectOpt.val() === "Service") {
-            if ($("#getOpt").children().length > 0) {
-                return false;
-            } else {
-                $("#getOpt").append('<br>Select Type<select class="browser-default custom-select" id="typeOpt" name="getType"><option selected disabled="">...</option><option value="Hourly">Hourly</option><option value="Fixed">Fixed</option></select>');
-            }
-        }
-
-        /** get type function */
-        $("#typeOpt").change(function () {
-            var type = $(this);
-            /** if selected value in Hourly*/
-            if (type.val() === "Hourly") {
-                if ($("#getType:has(input)")) {
-                    $('#inputField').remove();
-
-                    $("#getType").append('<div id="inputField">Entere Details<input type="text" class="form-control" id="price" name="price" placeholder="Enter Price Hourly"><input type="text" class="form-control" id="hour" name="hours" placeholder="Enter no of hours">Total <input class="form-control" id="total" name="total"/><input class="form-control" id="tax" name="tax" placeholder="Enter Tax in %"/><input class="form-control" id="discount" name="discount" placeholder="Enter Discount"/>Sub Total<input class="form-control" id="subTotal" name="subTotal"/></div>');
-
-                    $("#inputField").on('change', function () {
-                        var price = $('#price').val();
-                        var hour = $('#hour').val();
-                        var total = price * hour;
-                        $('#total').val(total);
-
-                        var tax = $('#tax').val();
-                        var discount = $('#discount').val();
-                        var totalTax = taxFunction(total, tax)
-                        var subTotal = subTotalFunction(total, totalTax, discount);
-                        $("#subTotal").val(subTotal);
-
-                    });
-                }
-                /** if selected value is Fixed*/
-            } else if (type.val() === "Fixed") {
-                if ($("#getType:has(input)")) {
-                    $('#inputField').remove();
-
-                    $("#getType").append('<div id="inputField">Entere Details<input type="text" class="form-control" id="amount" name="amount" placeholder="Enter Amount"><input type="text" class="form-control" id="qty" name="qty" placeholder="Enter Quantity">Total<input class="form-control" id="total" name="total"/><br><input class="form-control" id="tax" name="tax" placeholder="Enter Tax in %"/><input class="form-control" id="discount" name="discount" placeholder="Enter Disocunt Price"/>Sub Total<input class="form-control" id="subTotal" name="subTotal"/></div>');
-
-                    $("#inputField").on('change', function () {
-                        var amount = $('#amount').val();
-                        var qty = $('#qty').val();
-                        var total = qty * amount;
-                        $('#total').val(total);
-
-                        var tax = $('#tax').val();
-                        var discount = $('#discount').val();
-                        var totalTax = taxFunction(total, tax);
-                        var subTotal = subTotalFunction(total, totalTax, discount);
-
-                        $("#subTotal").val(subTotal);
-                    });
-                }
-            }
-        });
-    });
+    $newRow.find('input').val('');
+    $newRow.find('td:last').text('$0.00');
+    $newRow.insertAfter($lastRow);
+    $newRow.find('input:first').focus();
 });
+
+/** select type change */
+function handleTypeChange(element) {
+    let typeDiv = $(element);
+    let typeElements = element.parentElement.parentElement.querySelectorAll('input');
+    if (typeDiv.val() === 'Hourly') {
+        $(typeElements[0]).attr("placeholder", "Price Hourly");
+        $(typeElements[1]).attr("placeholder", "No Of Hours");
+    } else if (typeDiv.val() === 'Fixed') {
+        $(typeElements[0]).attr("placeholder", "Fixed Amount");
+        $(typeElements[1]).attr("placeholder", "Fixed Quantity Quantity");
+    }
+}
+
+/** calculation total */
+function calculateTotals(inputTotal) {
+    let inputElements = $(inputTotal);
+    let lastRow = inputTotal.parentElement.parentElement.lastElementChild;
+    let totalInputs = inputTotal.parentElement.parentElement.querySelectorAll('input');
+    let quantity1 = totalInputs[0].value;
+    let quantity2 = totalInputs[1].value;
+    let tax = totalInputs[3].value;
+    let discount = totalInputs[4].value;
+    let totalPrice = totalPriceOfValues(quantity1, quantity2);
+    let total = totalInputs[2].value = totalPrice;
+    let getTaxPrice = taxCalculation(total, tax);
+    let price = getTaxPrice - discount;
+    lastRow.innerHTML = price;
+    calculateSubtotal();
+}
+
+/** calculate subtotal */
+function calculateSubtotal() {
+    let subTotalElements = document.getElementsByClassName('subtotal');
+
+    let total = 0;
+    for (let item of subTotalElements) {
+        total = total + parseFloat(item.innerHTML);
+    }
+    $('.subTotalPrice').text(total);
+}
+
+/**price of two fixed or hourly quantities*/
+function totalPriceOfValues(val1, val2) {
+    return val1 * val2;
+}
+
+/** tax calculation*/
+function taxCalculation(total, taxPrice) {
+    let tax = total / 100 * taxPrice;
+    return total - tax;
+
+}
+
