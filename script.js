@@ -30,10 +30,12 @@ $('.btn-add-row').on('click', () => {
                 if(childNode[k].tagName){
                     /** getting attribute name */
                     let nameAttributes = childNode[k].getAttribute('name');
-                    let splitArr = nameAttributes.split('[');
-                    let changedNameAttr = `${splitArr[0]}[${node}][${splitArr[2]}`;
-                    console.log(changedNameAttr)
-                    childNode[k].setAttribute('name', changedNameAttr);
+                    if(nameAttributes){
+                        let splitArr = nameAttributes.split('[');
+                        let changedNameAttr = `${splitArr[0]}[${node}][${splitArr[2]}`;
+                        console.log(changedNameAttr)
+                        childNode[k].setAttribute('name', changedNameAttr);
+                    }
                 }
             }
         }
