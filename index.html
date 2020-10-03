@@ -20,8 +20,8 @@
     <button class="btn-add-row btn btn-success mt-2">Add row</button>
     <br>
 
-    <form action="getData.php" method="post">
-        <table class="table table-responsive">
+    <form action="getData.php" method="post" id="formId">
+        <table class="table table-responsive tableId">
             <tr class="heading">
                 <td class="h2" style="color: green">
                     Invoice System
@@ -53,7 +53,7 @@
             <tr class="item">
 
                 <td>
-                    <select class="browser-default custom-select" name="data[node][item]" id="selectOpt">
+                    <select class="browser-default custom-select" name="node[0][item]" id="selectOpt">
                         <option selected disabled>Select One</option>
                         <option value="Project">Project</option>
                         <option value="Service">Service</option>
@@ -61,7 +61,7 @@
                 </td>
 
                 <td>
-                    <select class="browser-default custom-select" name="data[node][type]" id="typeOpt"
+                    <select class="browser-default custom-select" name="node[0][type]" id="typeOpt"
                             onchange="handleTypeChange(this)">
                         <option selected disabled="">Select Type</option>
                         <option value="Hourly">Hourly</option>
@@ -70,16 +70,16 @@
                 </td>
 
                 <td>
-                    <input type="number" value="" name="data[node][qnty1]" onkeyup="calculateTotals(this)"
+                    <input type="number" value="" name="node[0][qnty1]" id="qnty1" onkeyup="calculateTotals(this)"
                            placeholder=""/>
                 </td>
 
                 <td>
-                    <input type="number" value="" name="data[node][qnty2]" onkeyup="calculateTotals(this)"
+                    <input type="number" value="" name="node[0][qnty2]" id="qnty2" onkeyup="calculateTotals(this)"
                            placeholder=""/>
                 </td>
                 <td>
-                    <input type="number" class="total" value="" name="data[node][total]"
+                    <input type="number" class="total" value="" id="total" name="node[0][total]"
                            onkeyup="calculateTotals(this)"/>
                 </td>
 
@@ -102,25 +102,26 @@
 
             <tr class="calculation">
                 <td>
-                    <input type="text" value="" id="subTotal" name="data[node][subTotal]"
+                    <input type="text" value="" id="subTotal" name="data[subTotal]"
                            onkeyup="subCalculateTotals(this)"/>
                 </td>
 
                 <td>
-                    <input type="number" name="data[node][tax]" value="" onkeyup="subCalculateTotals(this)"/>
+                    <input type="number" name="data[tax]" id="tax" value="" onkeyup="subCalculateTotals(this)"/>
                 </td>
 
                 <td>
-                    <input type="number" name="data[node][discount]" value="" onkeyup="subCalculateTotals(this)"/>
+                    <input type="number" name="data[discount]" id="discount" value=""
+                           onkeyup="subCalculateTotals(this)"/>
                 </td>
                 <td>
-                    <input type="text" id="finalPrice" name="data[node][finalPrice]" value=""
+                    <input type="text" id="finalPrice" name="data[finalPrice]" value=""
                            onkeyup="subCalculateTotals(this) "/>
                 </td>
             </tr>
         </table>
         <br>
-        <input type="submit" class="btn btn-primary" value="submit">
+        <button type="submit" id="submitBtn" class="btn btn-primary">Submit</button>
     </form>
 </div>
 </body>

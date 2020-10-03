@@ -1,8 +1,11 @@
 /** ad new row */
 let node = 0;
 $('.btn-add-row').on('click', () => {
+    node++;
     let lastRow = $('.item:first');
     let newRow = lastRow.clone();
+
+    /** adding delete button for repeater*/
     if (newRow[0].lastElementChild.getElementsByTagName('button').length === 0) {
         let deleteBtnRow = document.createElement('td');
         let deleteBtn = document.createElement('button');
@@ -16,16 +19,34 @@ $('.btn-add-row').on('click', () => {
     let insertRow = $('.item:last');
     newRow.insertAfter(insertRow[0]);
     newRow.find('input:first').focus();
+
+    for (let i = 0; i < newRow.length; i++) {
+        let item = newRow[i];
+        let itemChilds = item.childNodes;
+        for (let j = 0; j < itemChilds.length; j++) {
+            let tdTags = itemChilds[j];
+            let childNode = tdTags.childNodes;
+            for (let k = 0; k < childNode.length; k++) {
+                if(childNode[k].tagName){
+                    /** getting attribute name */
+                    let nameAttributes = childNode[k].getAttribute('name');
+                    let splitArr = nameAttributes.split('[');
+                    let changedNameAttr = `${splitArr[0]}[${node}][${splitArr[2]}`;
+                    childNode[k].setAttribute('name', changedNameAttr);
+                }
+            }
+        }
+    }
 });
 
 /** delete button handler*/
 function handleRowDelete(evt) {
-    evt.preventDefault()
+    evt.preventDefault();
     let parentRow = evt.target.parentElement.parentNode;
     parentRow.parentNode.removeChild(parentRow);
 }
 
-/** select type change */
+/** select type change*/
 function handleTypeChange(element) {
     let typeDiv = $(element);
     let typeElements = element.parentElement.parentElement.querySelectorAll('input');
@@ -81,6 +102,5 @@ function totalPriceOfValues(val1, val2) {
 function taxCalculation(total, taxPrice) {
     let tax = total / 100 * taxPrice;
     return total - tax;
-
 }
 
