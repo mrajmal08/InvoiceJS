@@ -102,20 +102,20 @@
 
             <tr class="calculation">
                 <td>
-                    <input type="text" value="" id="subTotal" name="data[subTotal]"
+                    <input type="text" value="" id="subTotal" name="finalPrice[subTotal]"
                            onkeyup="subCalculateTotals(this)"/>
                 </td>
 
                 <td>
-                    <input type="number" name="data[tax]" id="tax" value="" onkeyup="subCalculateTotals(this)"/>
+                    <input type="number" name="finalPrice[tax]" id="tax" value="" onkeyup="subCalculateTotals(this)"/>
                 </td>
 
                 <td>
-                    <input type="number" name="data[discount]" id="discount" value=""
+                    <input type="number" name="finalPrice[discount]" id="discount" value=""
                            onkeyup="subCalculateTotals(this)"/>
                 </td>
                 <td>
-                    <input type="text" id="finalPrice" name="data[finalPrice]" value=""
+                    <input type="text" id="finalPrice" name="finalPrice[finalPrice]" value=""
                            onkeyup="subCalculateTotals(this) "/>
                 </td>
             </tr>

@@ -32,6 +32,7 @@ $('.btn-add-row').on('click', () => {
                     let nameAttributes = childNode[k].getAttribute('name');
                     let splitArr = nameAttributes.split('[');
                     let changedNameAttr = `${splitArr[0]}[${node}][${splitArr[2]}`;
+                    console.log(changedNameAttr)
                     childNode[k].setAttribute('name', changedNameAttr);
                 }
             }
