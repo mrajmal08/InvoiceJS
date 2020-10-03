@@ -2,108 +2,126 @@
 <html>
 <head>
     <title>Invoice</title>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          crossorigin="anonymous">
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
             crossorigin="anonymous"></script>
     <script src="script.js" defer></script>
-    <link href="style.css">
+    <!--    <link href="style.css">-->
 </head>
 <body>
-<div class="invoice-box">
-    <table class="table table-responsive">
-        <tr class="heading">
-            <td colspan="3">
-                Invoice System
-            </td>
-        </tr>
+<div class="container-fluid">
 
-        <tr class="heading">
-            <td>
-                Item
-            </td>
+    <button class="btn-add-row btn btn-success mt-2">Add row</button>
+    <br>
 
-            <td>
-                Type
-            </td>
+    <form action="getData.php" method="post">
+        <table class="table table-responsive">
+            <tr class="heading">
+                <td class="h2" style="color: green">
+                    Invoice System
+                </td>
+            </tr>
 
-            <td>
-                Quantity 1
-            </td>
-            <td>
-                Quantity 2
-            </td>
+            <tr class="heading">
+                <td>
+                    <strong>Item</strong>
+                </td>
 
-            <td>
-                Total
-            </td>
-            <td>
-                Tax%
-            </td>
-            <td>
-                Discount
-            </td>
-            <td>
-                Price
-            </td>
-        </tr>
+                <td>
+                    <strong>Type</strong>
+                </td>
 
-        <tr class="item">
-            <td>
-                <select class="browser-default custom-select" id="selectOpt">
-                    <option selected disabled>Select One</option>
-                    <option value="Project">Project</option>
-                    <option value="Service">Service</option>
-                </select>
-            </td>
+                <td>
+                    <strong>Quantity1 </strong>
+                </td>
+                <td>
+                    <strong>Quantity 2</strong>
+                </td>
 
-            <td>
-                <select class="browser-default custom-select" id="typeOpt" onchange="handleTypeChange(this)">
-                    <option selected disabled="">Select Type</option>
-                    <option value="Hourly">Hourly</option>
-                    <option value="Fixed">Fixed</option>
-                </select>
-            </td>
+                <td>
+                    <strong>Total</strong>
+                </td>
 
-            <td>
-                <input type="number" value="" onkeyup="calculateTotals(this)" placeholder=""/>
-            </td>
+            </tr>
 
-            <td>
-                <input type="number" value="" onkeyup="calculateTotals(this)" placeholder=""/>
-            </td>
-            <td>
-                <input type="number" value="" onkeyup="calculateTotals(this)"/>
-            </td>
-            <td>
-                <input type="number" value="" onkeyup="calculateTotals(this)"/>
-            </td>
+            <tr class="item">
 
-            <td>
-                <input type="number" value="" onkeyup="calculateTotals(this)"/>
-            </td>
-            <td class="subtotal">
-                $0.00
-            </td>
-        </tr>
+                <td>
+                    <select class="browser-default custom-select" name="data[node][item]" id="selectOpt">
+                        <option selected disabled>Select One</option>
+                        <option value="Project">Project</option>
+                        <option value="Service">Service</option>
+                    </select>
+                </td>
 
-        <tr>
-            <td colspan="4">
-                <button class="btn-add-row">Add row</button>
-            </td>
-        </tr>
+                <td>
+                    <select class="browser-default custom-select" name="data[node][type]" id="typeOpt"
+                            onchange="handleTypeChange(this)">
+                        <option selected disabled="">Select Type</option>
+                        <option value="Hourly">Hourly</option>
+                        <option value="Fixed">Fixed</option>
+                    </select>
+                </td>
 
-        <tr class="subTotalPrice">
-            Sub Total
-            <h3><td colspan="3"></td></h3>
+                <td>
+                    <input type="number" value="" name="data[node][qnty1]" onkeyup="calculateTotals(this)"
+                           placeholder=""/>
+                </td>
 
-        </tr>
-    </table>
+                <td>
+                    <input type="number" value="" name="data[node][qnty2]" onkeyup="calculateTotals(this)"
+                           placeholder=""/>
+                </td>
+                <td>
+                    <input type="number" class="total" value="" name="data[node][total]"
+                           onkeyup="calculateTotals(this)"/>
+                </td>
+
+            </tr>
+            <br>
+            <tr class="heading">
+                <td>
+                    <strong>Sub Total</strong>
+                </td>
+                <td>
+                    <strong>Tax%</strong>
+                </td>
+                <td>
+                    <strong>Discount</strong>
+                </td>
+                <td class="h4" style="color: red">
+                    <strong>Final Price</strong>
+                </td>
+            </tr>
+
+            <tr class="calculation">
+                <td>
+                    <input type="text" value="" id="subTotal" name="data[node][subTotal]"
+                           onkeyup="subCalculateTotals(this)"/>
+                </td>
+
+                <td>
+                    <input type="number" name="data[node][tax]" value="" onkeyup="subCalculateTotals(this)"/>
+                </td>
+
+                <td>
+                    <input type="number" name="data[node][discount]" value="" onkeyup="subCalculateTotals(this)"/>
+                </td>
+                <td>
+                    <input type="text" id="finalPrice" name="data[node][finalPrice]" value=""
+                           onkeyup="subCalculateTotals(this) "/>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <input type="submit" class="btn btn-primary" value="submit">
+    </form>
 </div>
 </body>
 </html>
